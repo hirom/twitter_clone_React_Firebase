@@ -3,7 +3,8 @@ import Post from "./Post";
 import "./Timeline.css";
 import TweetBox from "./TweetBox";
 import db from "../../firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import FlipMove from "react-flip-move";
 
 const Timeline = () => {
 	const [posts, setPosts] = useState([]);
@@ -11,8 +12,15 @@ const Timeline = () => {
 	useEffect(() => {
 		const postData = collection(db, "posts");
 		const q = query(postData, orderBy("timestamp", "desc"));
-		getDocs(q).then((QuerySnapshot) => {
-			setPosts(QuerySnapshot.docs.map((doc) => doc.data()));
+
+		//非リアルタイムデータ取得
+		// getDocs(q).then((QuerySnapshot) => {
+		// setPosts(QuerySnapshot.docs.map((doc) => doc.data()));
+		// });
+
+		//リアルタイムデータ取得
+		onSnapshot(q, (querySnapShot) => {
+			setPosts(querySnapShot.docs.map((doc) => doc.data()));
 		});
 	}, []);
 
@@ -26,6 +34,7 @@ const Timeline = () => {
 			<TweetBox />
 
 			{/* Post */}
+			{/* <FlipMove> */}
 			{posts.map((post, index) => (
 				<Post
 					key={index}
@@ -37,6 +46,7 @@ const Timeline = () => {
 					image={post.image}
 				/>
 			))}
+			{/* </FlipMove> */}
 		</div>
 	);
 };

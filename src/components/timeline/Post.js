@@ -30,6 +30,7 @@ const Post = ({ displayName, username, Verified, text, image, avatar }) => {
 					</div>
 				</div>
 				{image ? <img src={image} alt="unsplash random" /> : <></>}
+
 				<div className="post_footer">
 					<ChatBubbleOutline fontSize="small" />
 					<Repeat fontSize="small" />

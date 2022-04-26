@@ -14,8 +14,7 @@ p {
 }
 .post_body > img {
 	border-radius: 20px;
-	width: auto;
-	max-height: 300px;
+	width: 100%;
 }
 
 .post_footer {
